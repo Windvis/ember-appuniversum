@@ -32,9 +32,9 @@ const DEFAULT_LOCALIZATION = {
 };
 
 export default class AuDatePickerComponent extends Component {
-  @isoDate value;
-  @isoDate min;
-  @isoDate max;
+  @isoDateRepresentation value;
+  @isoDateRepresentation min;
+  @isoDateRepresentation max;
 
   get adapter() {
     if (!this.args.adapter) {
@@ -99,7 +99,7 @@ function validateLocalization(localizationArg) {
   });
 }
 
-function isoDate(target, key /*, descriptor */) {
+function isoDateRepresentation(target, key /*, descriptor */) {
   return {
     get() {
       let argValue = this.args[key];
