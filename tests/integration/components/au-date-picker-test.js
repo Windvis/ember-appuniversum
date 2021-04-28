@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { click, render, settled, pauseTest, waitFor, waitUntil } from '@ember/test-helpers';
+import { click, render, waitFor, waitUntil } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
 /** @type import("qunit-dom").module */
@@ -23,7 +23,7 @@ module('Integration | Component | au-date-picker', function(hooks) {
 
     let labelFor = this.element.querySelector('[data-test-au-date-picker-label]').getAttribute('for');
     assert.equal(labelFor, 'label-test');
-    // await pauseTest()
+
     let inputId = this.element.querySelector('[data-test-au-date-picker-component] input').id;
     assert.equal(labelFor, inputId);
   });
@@ -96,7 +96,6 @@ module('Integration | Component | au-date-picker', function(hooks) {
 
     let availableDateButtons = this.element.querySelectorAll('.duet-date__day');
     let targetDateButton = [...availableDateButtons].find((date) => {
-      // debugger;
       return date.children[0].innerText === '2';
     });
 
