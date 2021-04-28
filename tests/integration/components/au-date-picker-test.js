@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { click, render, waitFor, waitUntil } from '@ember/test-helpers';
+import { click, render, settled, waitFor, waitUntil } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 
 /** @type import("qunit-dom").module */
@@ -65,9 +65,11 @@ module('Integration | Component | au-date-picker', function(hooks) {
     this.set('date', date);
 
     // The web component updates aren't monitored by Ember, so we need to do some manual waiting.
-    await waitUntil(() => {
-      return this.element.querySelector('[data-test-au-date-picker-component] input').value !== '1-1-2021';
-    }, { timeout: 2000 })
+    // await waitUntil(() => {
+    //   return this.element.querySelector('[data-test-au-date-picker-component] input').value !== '1-1-2021';
+    // }, { timeout: 2000 })
+
+    await settled();
     input.hasValue('31-12-2021');
   });
 
@@ -87,12 +89,13 @@ module('Integration | Component | au-date-picker', function(hooks) {
     await webComponentRender();
 
     await toggleDatePicker();
-    await datePickerOpened();
+    // await datePickerOpened();
 
     // Another hack to make sure the date picker buttons have actual values..
-    await waitUntil(() => {
-      return this.element.querySelector('.duet-date__day').children[0].innerText !== '';
-    }, { timeout: 2000 })
+    // await waitUntil(() => {
+    //   return this.element.querySelector('.duet-date__day').children[0].innerText !== '';
+    // }, { timeout: 2000 })
+    await settled();
 
     let availableDateButtons = this.element.querySelectorAll('.duet-date__day');
     let targetDateButton = [...availableDateButtons].find((date) => {

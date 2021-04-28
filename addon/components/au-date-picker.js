@@ -2,6 +2,9 @@ import Component from '@glimmer/component';
 import { action } from "@ember/object";
 import { assert, runInDebug } from '@ember/debug';
 import { guidFor } from '@ember/object/internals';
+import { buildWaiter } from '@ember/test-waiters';
+
+let waiter = buildWaiter('ember-appuniversum:au-date-picker');
 
 const DEFAULT_ADAPTER = {
   parse: function(value = '', createDate) {
@@ -68,12 +71,22 @@ export default class AuDatePickerComponent extends Component {
 
   @action
   handleDuetDateChange(event) {
+    let token = waiter.beginAsync();
+
     let wasDatePickerCleared = !event.detail.value;
     if (wasDatePickerCleared) {
       this.args.onChange?.(null, null);
     } else {
       this.args.onChange?.(event.detail.value, event.detail.valueAsDate);
     }
+
+    waiter.endAsync(token);
+  }
+
+  @action
+  handleDuetOpen() {
+    let token = waiter.beginAsync();
+    waiter.endAsync(token);
   }
 }
 
